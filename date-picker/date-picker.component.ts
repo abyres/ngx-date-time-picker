@@ -12,7 +12,7 @@ export class DatePickerComponent implements OnInit {
   @Input() dateTimeFormat;
 
   @Output() getData = new EventEmitter;
-  calendarMY: any = null;
+  calendarMY: moment.Moment = null;
   selectedDate = '';
   startDayNumber: number;
   daysInCurrentMonth: number;
@@ -78,7 +78,7 @@ export class DatePickerComponent implements OnInit {
       this.selectedMinutes = defaultdate.format('mm');
       this.selectedAmPm = defaultdate.format('A');
       this.selectedDateTime = this.selectedHour + ':' + this.selectedMinutes + this.selectedAmPm;
-      this.calendarMY = '';
+      this.calendarMY = null;
       this.selectedTime = this.selectedDateTime;
     }
     //Datepicker 
@@ -90,12 +90,12 @@ export class DatePickerComponent implements OnInit {
     }
 
   }
-  loadCalendar(momentMonth) {
+  loadCalendar(momentMonth: moment.Moment) {
     if (this.options.datePicker) {
       momentMonth = momentMonth.startOf('month');
       this.month = momentMonth.format('MMM');
-      let activeMonth = parseInt(momentMonth.month());
-      this.year = parseInt(momentMonth.year());
+      let activeMonth = momentMonth.month();
+      this.year = momentMonth.year();
 
       let prevMonth = moment().month(activeMonth).year(this.year).add(-1, 'months');
       let nextMonth = moment().month(activeMonth).year(this.year).add(1, 'months');
